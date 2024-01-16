@@ -2,21 +2,21 @@
 
 Documentation for random_numbers.sh:
 
-[Build Instructions]:
+[Build Instructions]####################################################:
 
 Copy and paste the script into a new file, for example, random_numbers.sh.
 
 Make the script executable: chmod +x random_numbers.sh.
 
-[Usage]:
+[Usage]#################################################################:
 
 Run the script from the terminal: ./random_numbers.sh.
 
-[Description]:
+[Description]###########################################################:
 
 This Bash script generates a random permutation of numbers from 1 to a specified maximum number (max_number). It checks if max_number is a positive integer using a regular expression. If it is valid, the script uses the shuf command to shuffle the sequence of numbers.
 
-[Tests]:
+[Tests]#################################################################:
 
 Running the script with different max_number variable values:
 
@@ -46,7 +46,7 @@ root@diego-Legion-5-15ACH6:~/objective-interview# ./random_order.sh
 Please enter a positive valid integer for max_number...
 
 
-[Known Limitations / Bugs]:
+[Known Limitations / Bugs]#############################################:
 
 Dependency on shuf:
 The script relies on the shuf command, which might not be available on all systems although pretty unlikely, I just thought it was cleaner than using an array and environment variable $RANDOM.
