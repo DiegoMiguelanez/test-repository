@@ -34,13 +34,11 @@ root@diego-Legion-5-15ACH6:~/objective-interview# ./random_order.sh
 5
 
 2) Invalid input test 1(max_number="abc"):
-max_number="abc"
 ./random_numbers.sh
 root@diego-Legion-5-15ACH6:~/objective-interview# ./random_order.sh
 Please enter a positive valid integer for max_number...
 
 3) Invalid input test 2(max_number=-10):
-max_number=-10
 ./random_numbers.sh
 root@diego-Legion-5-15ACH6:~/objective-interview# ./random_order.sh
 Please enter a positive valid integer for max_number...
