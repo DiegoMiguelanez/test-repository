@@ -86,7 +86,7 @@ OK - RAM Total: 1967MB, Used: 398MB, Free: 1258MB, Usage Percentage: 20.23%
 scp check_ram root@debian:/usr/local/nagios/libexec
 ```
 
-Add command in AlmaLinux9
+Add command definition in AlmaLinux9 Nagios server
 ```Bash
 vim /usr/local/nagios/etc/objects/commands.cfg
 
