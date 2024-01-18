@@ -56,6 +56,8 @@ Also add services to monitor, in this case previously installed "Nagios Core Plu
 
 HTTP also to see if webserver is up since as the exercise mentioned, the server is used for SSL offloading and proxying, so I understand it will have installed an nginx or apache server to do so.
 
+My config file for this step: [nodes.cfg](https://github.com/DiegoMiguelanez/test-repository/blob/main/nodes.cfg)
+
 ```bash
 vim /usr/local/nagios/etc/objects/nodes.cfg
 ```
