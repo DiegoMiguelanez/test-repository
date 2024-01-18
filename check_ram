@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Threshold values
+WARNING_THRESHOLD=80
+CRITICAL_THRESHOLD=90
+
+# Get memory info
+mem_info=$(free -m | awk 'NR==2{printf "RAM Total: %sMB, Used: %sMB, Free: %sMB, Usage Percentage: %.2f%%", $2, $3, $4, $3*100/$2 }')
+
+# Get the percentage of memory usage
+usage_percentage=$(echo "$mem_info" | awk -F'Usage Percentage: ' '{print $2}' | awk -F'%' '{print $1}')
+
+# Check thresholds and generate the corresponding output
+if [ $(echo "$usage_percentage >= $CRITICAL_THRESHOLD" | bc -l) -eq 1 ]; then
+  echo "CRITICAL - $mem_info"
+  exit 2  # CRITICAL state
+elif [ $(echo "$usage_percentage >= $WARNING_THRESHOLD" | bc -l) -eq 1 ]; then
+  echo "WARNING - $mem_info"
+  exit 1  # WARNING state
+else
+  echo "OK - $mem_info"
+  exit 0  # OK state
+fi
