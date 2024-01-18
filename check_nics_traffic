@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Interfaces to monitor (actualiza con los nombres de tus interfaces)
+INTERFACE1="enp1s0"
+INTERFACE2="br-7125fa634eb3"
+
+# Get current and previous RX and TX bytes for both interfaces
+RX1_PREV=$(cat /sys/class/net/$INTERFACE1/statistics/rx_bytes)
+TX1_PREV=$(cat /sys/class/net/$INTERFACE1/statistics/tx_bytes)
+RX2_PREV=$(cat /sys/class/net/$INTERFACE2/statistics/rx_bytes)
+TX2_PREV=$(cat /sys/class/net/$INTERFACE2/statistics/tx_bytes)
+
+# Sleep for 1 second
+sleep 1
+
+# Get current RX and TX bytes for both interfaces
+RX1_CURR=$(cat /sys/class/net/$INTERFACE1/statistics/rx_bytes)
+TX1_CURR=$(cat /sys/class/net/$INTERFACE1/statistics/tx_bytes)
+RX2_CURR=$(cat /sys/class/net/$INTERFACE2/statistics/rx_bytes)
+TX2_CURR=$(cat /sys/class/net/$INTERFACE2/statistics/tx_bytes)
+
+# Calculate the RX and TX rates in bytes per second for both interfaces
+RX1_RATE=$((RX1_CURR - RX1_PREV))
+TX1_RATE=$((TX1_CURR - TX1_PREV))
+RX2_RATE=$((RX2_CURR - RX2_PREV))
+TX2_RATE=$((TX2_CURR - TX2_PREV))
+
+# Convert rates to Gbps for both interfaces
+RX1_GBITS=$(echo "scale=2; $RX1_RATE/1000000000" | bc)
+TX1_GBITS=$(echo "scale=2; $TX1_RATE/1000000000" | bc)
+RX2_GBITS=$(echo "scale=2; $RX2_RATE/1000000000" | bc)
+TX2_GBITS=$(echo "scale=2; $TX2_RATE/1000000000" | bc)
+
+# Define thresholds (ajusta según sea necesario)
+WARNING_THRESHOLD=8   # 8 Gbps
+CRITICAL_THRESHOLD=9  # 9 Gbps
+
+# Check thresholds and generate the output
+if (( $(echo "$RX1_GBITS >= $CRITICAL_THRESHOLD" | bc -l) )) || (( $(echo "$TX1_GBITS >= $CRITICAL_THRESHOLD" | bc -l) )) ||
+   (( $(echo "$RX2_GBITS >= $CRITICAL_THRESHOLD" | bc -l) )) || (( $(echo "$TX2_GBITS >= $CRITICAL_THRESHOLD" | bc -l) )); then
+  echo "CRITICAL - Network traffic: $INTERFACE1 RX $RX1_GBITS Gbps, TX $TX1_GBITS Gbps | $INTERFACE2 RX $RX2_GBITS Gbps, TX $TX2_GBITS Gbps"
+  exit 2
+elif (( $(echo "$RX1_GBITS >= $WARNING_THRESHOLD" | bc -l) )) || (( $(echo "$TX1_GBITS >= $WARNING_THRESHOLD" | bc -l) )) ||
+     (( $(echo "$RX2_GBITS >= $WARNING_THRESHOLD" | bc -l) )) || (( $(echo "$TX2_GBITS >= $WARNING_THRESHOLD" | bc -l) )); then
+  echo "WARNING - Network traffic: $INTERFACE1 RX $RX1_GBITS Gbps, TX $TX1_GBITS Gbps | $INTERFACE2 RX $RX2_GBITS Gbps, TX $TX2_GBITS Gbps"
+  exit 1
+else
+  echo "OK - Network traffic: $INTERFACE1 RX $RX1_GBITS Gbps, TX $TX1_GBITS Gbps | $INTERFACE2 RX $RX2_GBITS Gbps, TX $TX2_GBITS Gbps"
+  exit 0
+fi
