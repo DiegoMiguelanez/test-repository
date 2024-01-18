@@ -30,6 +30,7 @@ second.
 
 ● Latency
 
+● SSL Expiration date
 
 
 [2] How would you do that?
@@ -37,7 +38,7 @@ second.
 ## 1. Install Nagios Core on Almalinux9 VM following:
 - [Fedora Easy Setup](https://support.nagios.com/kb/article/nagios-core-installing-nagios-core-from-source-96.html#Fedora)
 
-## 2. Install Nagios Core Plugins
+## 2. Install Nagios Core Plugins both on Debian and AlmaLinux9 Nagios Server
 
 These are standalone extensions that process command-line arguments and monitor just about anything in Nagios Core.(Missing RAM, Network traffic, Requests per second and latency)
 ```bash
@@ -136,9 +137,19 @@ root@debian:/usr/local/nagios/libexec# cat /sys/class/net/enp1s0/statistics/rx_b
 2044191
 ```
 
+## 8. Do the same steps on creating required plugins for the rest of the metrics proposed
+
+
 [3] What are the challenges of monitoring this?
+---
+- Making alarms precise enough with more complex metrics like SSL expiration date, requests per second probably parsing nginx logs but also trying to affect as less as possible on Server's performance
+  
+- Decide when the monitoring system should tell you if something's wrong. If it tells you too much, you might ignore it but if it tells you too little, you might miss a problem
 
+- Probably implementing more metrics as the server's monitoring is tested, it comes to my mind something like First time response or how fast it decrypts incoming encrypted traffic.
 
+- Keeping and eye on Nagios's server storage since saving old data could be interesting for data analysis
+  
 
 
 
