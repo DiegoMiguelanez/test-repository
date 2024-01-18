@@ -53,7 +53,7 @@ Agent used for communicating with remote hosts, also check port 5666 is open for
 dnf install nrpe
 ```
 ## 4. Adding a Remote Host via configuration file
-Add nodes.cfg where the node to monitor is specified, Debian in my case, I uploaded the file "nodes.cfg" to this repository.
+Add nodes.cfg where the node to monitor is specified, Debian in my case, I uploaded the file [nodes.cfg](https://github.com/DiegoMiguelanez/test-repository/blob/main/nodes.cfg) to this repository.
 Also add services to monitor, in this case previously installed "Nagios Core Plugins" for CPU load average, Disk space, ping check and http.
 
 HTTP also to see if webserver is up since as the exercise mentioned, the server is used for SSL offloading and proxying, so I understand it will have installed an nginx or apache server to do so.
@@ -81,7 +81,7 @@ My script [check_ram](https://github.com/DiegoMiguelanez/test-repository/blob/ma
 OK - RAM Total: 1967MB, Used: 398MB, Free: 1258MB, Usage Percentage: 20.23%
 ```
 
-## 6. Add plugin to Debian SSL offloading server and configure it in AlmaLinux9 Nagios Server
+## 6. Add RAM plugin to Debian SSL offloading server and configure it in AlmaLinux9 Nagios Server
 ```Bash
 scp check_ram root@debian:/usr/local/nagios/libexec
 ```
@@ -116,7 +116,25 @@ Now check in Nagios webapp that plugin is correctly working and monitoring "Debi
    	
 RAM
 OK	01-18-2024 21:22:57	0d 0h 1m 49s	1/3	OK - RAM Total: 1967MB, Used: 398MB, Free: 1258MB, Usage Percentage: 20.23%
-   ```
+
+```
+## 7. Add Network traffic plugin for 2 x 10Gbit/s nics for next metric
+
+Created [check_nics_traffic](https://github.com/DiegoMiguelanez/test-repository/blob/main/check_nics_traffic) bash script to monitor both my Debian interfaces enp1s0 and br-7125fa634eb3.
+
+Since it's a test VM and tresholds jump at 8Gbps and 9Gbps the alarm will always stay OK, but in a high traffic environmet it will definetely work:
+
+```bash
+root@debian:/usr/local/nagios/libexec# ./check_nics_traffic 
+OK - Network traffic: enp1s0 RX 0 Gbps, TX 0 Gbps | br-7125fa634eb3 RX 0 Gbps, TX 0 Gbps
+
+```
+My machined only received 2044191 bytes which are roughly 1.95MB:
+
+```bash
+root@debian:/usr/local/nagios/libexec# cat /sys/class/net/enp1s0/statistics/rx_bytes
+2044191
+```
 
 [3] What are the challenges of monitoring this?
 
