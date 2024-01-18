@@ -30,7 +30,7 @@ second.
 
 
 
-[2] How would you do that?N
+[2] How would you do that?
 ---
 1. Install Nagios Core on Almalinux9 VM following:
 - [Fedora Easy Setup](https://support.nagios.com/kb/article/nagios-core-installing-nagios-core-from-source-96.html#Fedora)
@@ -50,10 +50,20 @@ Agent used for communicating with remote hosts, also check port 5666 is open for
 ```bash
 dnf install nrpe
 ```
+4. Adding a Remote Host via configuration file
+Add nodes.cfg where the node to monitor is specified, Debian in my case, I uploaded the file "nodes.cfg" to this repository.
+Also add services to monitor, in this case previously installed "Nagios Core Plugins" for CPU load average, Disk space, ping check and http.
+
+HTTP also to see if webserver is up since as the exercise mentioned, the server is used for SSL offloading and proxying, so I understand it will have installed an nginx or apache server to do so.
+
+```bash
+vim /usr/local/nagios/etc/objects/nodes.cfg
+```
+
 
 [3] What are the challenges of monitoring this?
 
 
-4. Adding a Remote Host via configuration file
+
 
 
