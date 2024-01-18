@@ -10,8 +10,10 @@ Documentation for random_numbers.sh:
 
 [Usage]:
 
-Run the script from the terminal: ./random_numbers.sh.
-
+Run the script from the terminal: 
+```bash
+./random_numbers.sh
+```
 [Description]:
 
 This Bash script generates a random permutation of numbers from 1 to a specified maximum number (max_number). It checks if max_number is a positive integer using a regular expression. If it is valid, the script uses the shuf command to shuffle the sequence of numbers.
@@ -21,6 +23,7 @@ This Bash script generates a random permutation of numbers from 1 to a specified
 Running the script with different max_number variable values:
 
 1) Valid input test 1(max_number=10):
+```bash
 root@diego-Legion-5-15ACH6:~/objective-interview# ./random_order.sh
 6
 3
@@ -32,17 +35,19 @@ root@diego-Legion-5-15ACH6:~/objective-interview# ./random_order.sh
 2
 9
 5
-
+```
 2) Invalid input test 1(max_number="abc"):
+```bash
 ./random_numbers.sh
 root@diego-Legion-5-15ACH6:~/objective-interview# ./random_order.sh
 Please enter a positive valid integer for max_number...
-
+```
 3) Invalid input test 2(max_number=-10):
+```bash
 ./random_numbers.sh
 root@diego-Legion-5-15ACH6:~/objective-interview# ./random_order.sh
 Please enter a positive valid integer for max_number...
-
+```
 [Known Limitations / Bugs]:
 
 1) Dependency on shuf:
