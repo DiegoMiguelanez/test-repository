@@ -16,11 +16,13 @@ second.
 ---
 ● ping
 
-● CPU Usage
+● Disk Space (focusing mainly on SSL cert and files partition and root partition if machine consists on different partitions)
+
+● CPU Load
+
+● HTTP
 
 ● RAM
-
-● Disk Space (focusing mainly on SSL cert and files partition and root partition if machine consists on different partitions)
 
 ● Network traffic (Monitor 10Gbit/s network traffic to anticipate network Bottleneck)
 
